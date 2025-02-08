@@ -1,0 +1,30 @@
+.main-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 1000;
+    background-color: transparent;
+    .navbar-container {
+        @apply container m-auto px-10 py-5  flex justify-between items-center;
+        .logo-wrapper {
+            @apply  text-white text-4xl font-bold;
+            letter-spacing: 5px;
+
+        }
+        .menu-wrapper {
+            .menu {
+                @apply flex gap-5 md:gap-10 text-white text-lg list-none;
+                font-family: 'Playfair Display', serif;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+        }
+
+    }
+}
+
+.active {
+    color:#C21E56;
+}

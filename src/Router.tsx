@@ -9,7 +9,7 @@ const MainRouterProvider = () => {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} /> {/* Default child route */}
-            <Route path="about" element={<About />} />
+            <Route path="about-us" element={<About />} />
           </Route>
         </Routes>
       </BrowserRouter>

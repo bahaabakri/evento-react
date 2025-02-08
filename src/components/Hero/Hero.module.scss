@@ -1,0 +1,12 @@
+.hero-section {
+    @apply w-screen h-screen overflow-hidden;
+    background-color: #000;
+    .image-slider {
+        @apply w-full h-full;
+        opacity: 0.2;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        // animation: slideInOut 10s linear 2s infinite;
+    }
+}
