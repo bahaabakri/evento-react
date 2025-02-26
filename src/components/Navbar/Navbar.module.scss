@@ -8,11 +8,6 @@
     background-color: transparent;
     .navbar-container {
         @apply container m-auto px-10 py-5  flex justify-between items-center;
-        .logo-wrapper {
-            @apply  text-white text-4xl font-bold;
-            letter-spacing: 5px;
-
-        }
         .menu-wrapper {
             .menu {
                 @apply flex gap-5 md:gap-10 text-white text-lg list-none;
@@ -26,5 +21,5 @@
 }
 
 .active {
-    color:#C21E56;
+    color: var(--primary-color);
 }

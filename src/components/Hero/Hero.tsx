@@ -4,6 +4,8 @@ import styles from './Hero.module.scss'
 
 import { motion, AnimatePresence } from "framer-motion";
 import heroImagesPath from './hero-images';
+import Button from '../Button/Button';
+import OLogo from '../OlLgo/OLogo';
 const Hero = () => {
 
     const [selectedHeroImageIndex, setSelectedHeroImageIndex] = useState<number>(0)
@@ -18,22 +20,50 @@ const Hero = () => {
     })
     return (
         <div className={styles['hero-section']}>
-            {
-            <AnimatePresence>
+            <div className={styles['hero-section-overlay']}>
+                {
+                <AnimatePresence>
+                    <motion.div
+                        key={selectedHeroImageIndex}
+                        style={{
+                            backgroundImage: `url(${heroImagesPath[selectedHeroImageIndex]})`
+                        }}
+                        className={styles['image-slider']}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 0.2, x: 0 }}
+                        exit={{ opacity: 0, x: +50 }}
+                        transition={{ duration: 1, ease:'easeInOut' }}
+                    />
+                </AnimatePresence>
+                }
+            </div>
+            <div className={styles['hero-section-content']}>
                 <motion.div
-                    key={selectedHeroImageIndex}
-                    style={{
-                        backgroundImage: `url(${heroImagesPath[selectedHeroImageIndex]})`
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.4,
+                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                     }}
-                    className={styles['image-slider']}
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 0.2, x: 0 }}
-                    exit={{ opacity: 0, x: +50 }}
-                    transition={{ duration: 1, ease:'easeInOut' }}
-                />
-            </AnimatePresence>
-            }
+                >
+                    <div className={styles['content']}>
+                        <div className={styles['title']}>
+                            <OLogo />
+                            <div>
+                                ne Place Where The Events Live
+                            </div>
+                            
+                        </div>
+                        <div className={styles['subtitle']}>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, non. Eius quae architecto delectus aspernatur maiores, minima dignissimos nihil error dicta cumque, enim exercitationem, aliquid et rerum. Enim, nihil odio!
+                        </div>
+                        <Button title="Get Started" />
+                    </div>
+                </motion.div>
+
+            </div>
         </div>
+
     )
 }
 

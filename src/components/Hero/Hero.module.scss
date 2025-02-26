@@ -1,12 +1,34 @@
 .hero-section {
-    @apply w-screen h-screen overflow-hidden;
-    background-color: #000;
-    .image-slider {
+    @apply  overflow-hidden relative h-screen w-screen;
+    .hero-section-overlay {
+        background-color: #000;
         @apply w-full h-full;
-        opacity: 0.2;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        // animation: slideInOut 10s linear 2s infinite;
+        .image-slider {
+            @apply w-full h-full;
+            opacity: 0.2;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            // animation: slideInOut 10s linear 2s infinite;
+        }
+    }
+    .hero-section-content {
+        // margin-top: 100px;
+        @apply absolute top-0 left-0 w-full h-full flex justify-center items-center text-white;
+        .content {
+            @apply flex flex-col gap-5 px-10 text-center;
+            max-width: 900px;
+            .title {
+                @apply text-white font-bold text-2xl lg:text-4xl flex items-end;
+                letter-spacing: 5px;
+                .o-letter {
+                    color: var(--primary-color);
+                    @apply text-5xl;
+                }
+            }
+            .subtitle {
+                @apply text-white text-lg lg:text-xl lg:leading-10;
+            }
+        }
     }
 }

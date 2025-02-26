@@ -1,15 +1,12 @@
-import { Link, NavLink } from 'react-router-dom'
+import {NavLink } from 'react-router-dom'
 import styles from './Navbar.module.scss'
+import Logo from '../Logo/Logo'
 const Navbar = () => {
 
     return (
         <div className={styles['main-navbar']}>
             <div className={styles['navbar-container']}>
-                <div className={styles['logo-wrapper']}>
-                    <Link  to="/">
-                        Event0
-                    </Link>
-                </div>
+                <Logo />
                 <div className={styles['menu-wrapper']}>
                     <ul className={styles['menu']}>
                         <li className={styles['menu-item']}>
