@@ -1,0 +1,10 @@
+
+.menu-item {
+    @apply text-lg;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    .active {
+        color: var(--primary-color);
+    }
+}

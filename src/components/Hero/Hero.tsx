@@ -49,7 +49,7 @@ const Hero = () => {
                     <div className={styles['content']}>
                         <div className={styles['title']}>
                             <OLogo />
-                            <div>
+                            <div className={styles['rest-title']}>
                                 ne Place Where The Events Live
                             </div>
                             

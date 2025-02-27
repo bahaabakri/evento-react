@@ -16,18 +16,21 @@
         // margin-top: 100px;
         @apply absolute top-0 left-0 w-full h-full flex justify-center items-center text-white;
         .content {
-            @apply flex flex-col gap-5 px-10 text-center;
+            @apply flex flex-col gap-5 px-10;
             max-width: 900px;
             .title {
-                @apply text-white font-bold text-2xl lg:text-4xl flex items-end;
+                @apply text-white font-bold text-2xl lg:text-4xl flex justify-center;
                 letter-spacing: 5px;
                 .o-letter {
                     color: var(--primary-color);
                     @apply text-5xl;
                 }
+                .rest-title {
+                    @apply lg:leading-7
+                }
             }
             .subtitle {
-                @apply text-white text-lg lg:text-xl lg:leading-10;
+                @apply text-white text-lg lg:text-xl lg:leading-10 text-center;
             }
         }
     }

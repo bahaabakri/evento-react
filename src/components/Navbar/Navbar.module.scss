@@ -7,19 +7,10 @@
     z-index: 1000;
     background-color: transparent;
     .navbar-container {
-        @apply container m-auto px-10 py-5  flex justify-between items-center;
-        .menu-wrapper {
-            .menu {
-                @apply flex gap-5 md:gap-10 text-white text-lg list-none;
-                font-family: 'Playfair Display', serif;
-                font-weight: 700;
-                letter-spacing: 1px;
-            }
+        @apply container m-auto px-10 py-5  flex justify-between md:items-baseline ;
+        ul.menu {
+            @apply flex gap-5 md:gap-10 list-none text-white;
         }
 
     }
-}
-
-.active {
-    color: var(--primary-color);
 }
