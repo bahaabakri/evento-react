@@ -7,9 +7,9 @@
     z-index: 1000;
     background-color: transparent;
     .navbar-container {
-        @apply container m-auto px-10 py-5  flex justify-between md:items-baseline ;
+        @apply container m-auto px-10 py-5  flex justify-between ;
         ul.menu {
-            @apply flex gap-5 md:gap-10 list-none text-white;
+            @apply flex gap-5 md:gap-10 list-none text-white items-center;
         }
 
     }

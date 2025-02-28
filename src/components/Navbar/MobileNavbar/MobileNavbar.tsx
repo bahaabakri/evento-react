@@ -2,11 +2,12 @@ import * as motion from "motion/react-client"
 import { useRef, useState } from "react"
 import type { Variants } from "motion/react"
 import styles from './MobileNavbar.module.scss'
-import navMenuItems from "./navbar-menu-items"
-import NavMenuItem from "./NavMenuItem"
+import navMenuItems from "../navbar-menu-items"
+import NavMenuItem from "../NavMenuItem/NavMenuItem"
+import SearchBar from "../SearchBar/SearchBar"
 const sidebarVariants = {
     open: (height = 1000) => ({
-        clipPath: `circle(${height * 2 + 200}px at 175px 30px)`,
+        clipPath: `circle(${height * 2 + 200}px at 275px 30px)`,
         transition: {
             type: "spring",
             stiffness: 20,
@@ -14,7 +15,7 @@ const sidebarVariants = {
         },
     }),
     closed: {
-        clipPath: "circle(23px at 175px 30px)",
+        clipPath: "circle(23px at 275px 30px)",
         transition: {
             delay: 0.2,
             type: "spring",
@@ -34,7 +35,7 @@ const Path = (props: PathProps) => (
     <motion.path
         fill="transparent"
         strokeWidth="3"
-        stroke="#C21E56"
+        stroke="var(--primary-color)"
         strokeLinecap="round"
         {...props}
     />
@@ -85,8 +86,9 @@ const navVariants = {
 
 const Navigation = () => (
     <motion.ul className={`${styles['list']}`} variants={navVariants}>
+        <li><SearchBar /></li>
         {navMenuItems.map((navMenuItem) => (
-            <NavMenuItem {...navMenuItem} />
+            <NavMenuItem key={navMenuItem.id} {...navMenuItem} />
         ))}
     </motion.ul>
 )
@@ -96,14 +98,14 @@ const MobileNav = () => {
 
     return (
         <div>
-            <div className={styles['navbar-container']}>
+            <div className={styles['navbar-wrapper']}>
                 <motion.nav
                     initial={false}
                     animate={isOpen ? "open" : "closed"}
                     ref={containerRef}
                     className={styles['navbar']}
                 >
-                    <motion.div className={styles['navbar-content']} variants={sidebarVariants} />
+                    <motion.div className={styles['navbar-bg']} variants={sidebarVariants} />
                     <Navigation />
                     <MenuToggle toggle={() => setIsOpen(!isOpen)} />
                 </motion.nav>

@@ -1,8 +1,9 @@
 import styles from './Navbar.module.scss'
 import Logo from '../Logo/Logo'
 import navMenuItems from './navbar-menu-items'
-import NavMenuItem from './NavMenuItem'
-import MobileNav from './MobileNavbar'
+import NavMenuItem from './NavMenuItem/NavMenuItem'
+import MobileNav from './MobileNavbar/MobileNavbar'
+import SearchBar from './SearchBar/SearchBar'
 const Navbar = () => {
 
     return (
@@ -10,17 +11,18 @@ const Navbar = () => {
             <div className={styles['navbar-container']}>
                 <Logo />
                 {/* Large Screen Navbar*/}
-                <div className='hidden md:block'>
+                <div className='hidden lg:block'>
                     <ul className={styles['menu']}>
+                        <li><SearchBar /></li>
                         {
                             navMenuItems.map(navMenuItem => 
-                                <NavMenuItem {...navMenuItem}/>
+                                <NavMenuItem key={navMenuItem.id} {...navMenuItem}/>
                             )
                         }
                     </ul>
                 </div>
                 {/* Mobile Screen Navbar*/}
-                <div className='block md:hidden'>
+                <div className='block lg:hidden'>
                     <MobileNav />
                 </div>
 

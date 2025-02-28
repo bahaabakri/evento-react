@@ -4,7 +4,7 @@ import styles from './Hero.module.scss'
 
 import { motion, AnimatePresence } from "framer-motion";
 import heroImagesPath from './hero-images';
-import Button from '../Button/Button';
+import Button from '../../UI/Button/Button';
 import OLogo from '../OlLgo/OLogo';
 const Hero = () => {
 

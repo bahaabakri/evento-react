@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import type {NavMenuItem} from './navbar-menu-items'
+import type {NavMenuItem} from '../navbar-menu-items'
 import styles from './NavMenuItem.module.scss' 
 import { motion } from 'motion/react'
 const NavMenuItem = ({path, title}: NavMenuItem) => {
