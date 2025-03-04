@@ -1,8 +1,9 @@
 import SearchIcon from '@mui/icons-material/Search';
 import styles from './SearchBar.module.scss'
 import CustomTextField from '@/UI/CustomTextField/CustomTextField';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
+import useIsMobile from '@/Hooks/useIsMobile';
 
 const searchBarVariants = {
     open: (height = 1000) => ({
@@ -23,9 +24,25 @@ const searchBarVariants = {
         },
     },
 }
+
+
 const SearchBar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
+    const isMobile = useIsMobile()
+    useEffect(() => {
+        if (isMobile) {
+            setIsOpen(true)
+        } else {
+            setIsOpen(false)
+        }
+    }, [isMobile])
+    const openSearchBar = () => {
+        if (isMobile) {
+            return
+        }
+        setIsOpen(!isOpen)
+    }
     return (
         <div className={styles['search-bar-wrapper']}>
             <motion.div
@@ -41,7 +58,7 @@ const SearchBar = () => {
                 </div>
                 }
 
-                <div  className={styles['search-bar-icon-wrapper']} onClick={() => setIsOpen(!isOpen)} >
+                <div  className={styles['search-bar-icon-wrapper']} onClick={openSearchBar} >
                     <SearchIcon sx={{color: 'var(--primary-color)'}} />
                 </div>
             </motion.div>
