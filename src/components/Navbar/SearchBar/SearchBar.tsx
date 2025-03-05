@@ -3,7 +3,7 @@ import styles from './SearchBar.module.scss'
 import CustomTextField from '@/UI/CustomTextField/CustomTextField';
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import useIsMobile from '@/Hooks/useIsMobile';
+import useIsMobile from '@/hooks/useIsMobile';
 
 const searchBarVariants = {
     open: (height = 1000) => ({
