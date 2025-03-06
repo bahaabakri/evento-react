@@ -1,22 +1,30 @@
-import { motion, useInView } from 'motion/react'
+import { motion, PanInfo, useAnimate, useInView } from 'motion/react'
 import EventCard from '../EventCard/EventCard'
 import styles from './EventsHorizontal.module.scss'
 import { useEffect, useRef, useState } from 'react'
 import { EventModel } from '@/data/events/events.model'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SolidIcon from '@/UI/SolidIcon/SolidIcon'
 interface EventsHorizontalProps {
     sectionName:string,
     events:EventModel[]
 }
 const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
+    // const contentRef = useRef<HTMLDivElement>(null);
     const [maxDrag, setMaxDrag] = useState(0);
+    const [offsetWidth, setOffsetWidth] = useState(0)
     const isInView = useInView(containerRef)
+    const [contentRef, animate] = useAnimate()
+  
+
     useEffect(() => {
         const checkWidths = () => {
             if (containerRef.current && contentRef.current) {
               const containerWidth = containerRef.current.offsetWidth;
               const contentWidth = contentRef.current.scrollWidth;
+              
               setMaxDrag(containerWidth - contentWidth); // Ensure it's negative
             }
         }
@@ -24,11 +32,44 @@ const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
         window.addEventListener("resize", checkWidths);
         return () => window.removeEventListener("resize", checkWidths);
       }, []);
+    const handleBackScroll = () => {
+        setOffsetWidth((prev) => {
+            const newOffset = Math.min(prev + (containerRef.current?.offsetWidth || 0), 0);
+            animate(contentRef.current, { x: newOffset }, { duration: 0.5 });
+            return newOffset;
+        });
+    };
+    
+    const handleForwardScroll = () => {
+        setOffsetWidth((prev) => {
+            const newOffset = Math.max(prev - (containerRef.current?.offsetWidth || 0), maxDrag);
+            animate(contentRef.current, { x: newOffset }, { duration: 0.5 });
+            return newOffset;
+        });
+    };
+    // Track drag movement and update offsetWidth
+    const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        console.log("offsetWidth", offsetWidth);
+        console.log("info.offset.x", info.offset.x);
+        
+        setOffsetWidth(prev => prev + info.offset.x);
+    };
     return (
         <div className={styles['events-wrapper']}>
-            <div className={styles['events-title']}>
-                <span className={styles['events-title-first-letter']}>{sectionName.slice(0,1)}</span> 
-                <span>{sectionName.slice(1)}</span> 
+            <div className={styles['events-title-wrapper']}>
+                <div className={styles['events-title']}>
+                    <span className={styles['events-title-first-letter']}>{sectionName.slice(0,1)}</span> 
+                    <span>{sectionName.slice(1)}</span> 
+                </div>
+                <div className={styles['events-arrows']}>
+                    
+                    <SolidIcon handleClick={handleBackScroll} isDisabled={offsetWidth >= 0}>
+                        <ArrowBackIcon sx={{color: '#fff'}} />
+                    </SolidIcon>
+                    <SolidIcon handleClick={handleForwardScroll} isDisabled={offsetWidth <= maxDrag}>
+                        <ArrowForwardIcon sx={{color: '#fff'}} />
+                    </SolidIcon>
+                </div>
             </div>
             <motion.div 
                 className="overflow-hidden" 
@@ -39,6 +80,7 @@ const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
                 className={styles['events']} 
                 drag="x" 
                 dragConstraints={{ left: maxDrag, right: 0 }}
+                onPan={(event, info) => handleDrag(event, info)} // Track drag movement
                 animate={isInView ? { x: [0, maxDrag, 0] } : { x: 0 }} // Animate only if visible
                 transition={{ ease: "easeInOut", duration: 10}}
                 >

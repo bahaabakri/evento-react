@@ -1,9 +1,10 @@
 import { motion } from "framer-motion"
 import styles from './Button.module.scss'
+import { ReactElement } from "react"
 interface ButtonProps {
-    title: string
+    children: ReactElement
 }
-const Button = ({title}: ButtonProps) => {
+const Button = ({children}: ButtonProps) => {
     return (
         <div className={styles['button-wrapper']}>
         <motion.div
@@ -11,7 +12,7 @@ const Button = ({title}: ButtonProps) => {
             whileTap={{ scale: 0.8 }}
         >
             <button>
-                {title}
+                {children}
             </button>
         </motion.div>
     </div>

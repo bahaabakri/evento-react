@@ -3,6 +3,6 @@
     margin:  0 auto;
     button {
         background-color: var(--primary-color);
-        @apply text-white text-lg lg:text-2xl px-5 py-2 shadow-sm rounded-xl;
+        @apply text-white text-lg lg:text-2xl px-5 p-2 shadow-sm rounded-xl;
     }
 }

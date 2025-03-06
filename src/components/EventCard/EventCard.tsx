@@ -10,15 +10,20 @@ const EventCard = ({event}: {event:EventModel}) => {
                 <div className={styles['event-card-img']}>
                     <img src={event.image} alt={event.title} draggable={false} />
                 </div>
-                <div className={styles['event-card-title']}>
-                    {event.title}
-                </div>
-                <EventTimeToLeft isoDate={event.date} />
-                <div className={styles['event-card-desc']}>
-                    {event.description}
+                <div className={styles['event-card-title-desc']}>
+                    <div className={styles['event-card-title']}>
+                        {event.title}
+                    </div>
+                    <EventTimeToLeft isoDate={event.date} />
+                    <div className={styles['event-card-desc']}>
+                        {event.description}
+                    </div>
+
                 </div>
             </div>
-            <Button title='Join'/>
+            <Button>
+                <div>Join</div>
+            </Button>
 
 
         </div>

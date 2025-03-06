@@ -1,12 +1,19 @@
 .events-wrapper {
-    @apply container m-auto flex flex-col gap-5 my-5;
-    .events-title {
-        @apply font-bold text-xl;
-        color: var(--black);
-        .events-title-first-letter {
-            color:var(--primary-color);
-            @apply text-2xl;
+    @apply container px-2 m-auto flex flex-col gap-5 my-5;
+    .events-title-wrapper {
+        @apply flex justify-between items-center;
+        .events-title {
+            @apply font-bold text-xl;
+            color: var(--black);
+            .events-title-first-letter {
+                color:var(--primary-color);
+                @apply text-2xl;
+            }
         }
+        .events-arrows {
+            @apply flex gap-2 items-center;
+        }
+
     }
     .events {
         @apply flex  gap-2;

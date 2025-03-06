@@ -1,0 +1,7 @@
+.solid-icon-wrapper {
+    @apply rounded-full p-1 cursor-pointer;
+    background-color: var(--primary-color);
+    &.disabled {
+        @apply cursor-default bg-gray-400;
+    }
+}

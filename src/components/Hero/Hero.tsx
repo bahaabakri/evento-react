@@ -57,7 +57,9 @@ const Hero = () => {
                         <div className={styles['subtitle']}>
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, non. Eius quae architecto delectus aspernatur maiores, minima dignissimos nihil error dicta cumque, enim exercitationem, aliquid et rerum. Enim, nihil odio!
                         </div>
-                        <Button title="Get Started" />
+                        <Button>
+                            <div>Get Started</div>
+                        </Button>
                     </div>
                 </motion.div>
 
