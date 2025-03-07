@@ -4,5 +4,6 @@ export interface EventModel {
     title: string,
     date: string,
     place:string,
+    order?:number
     description: string
 }

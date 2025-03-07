@@ -27,17 +27,18 @@ const useTimeLeft = (isoDate:string) => {
                     minutes:0,
                     seconds:0
                 })
+            } else {
+                const seconds = Math.floor(diffTimeStamp / 1000) % 60;
+                const minutes = Math.floor(diffTimeStamp / (1000 * 60)) % 60;
+                const hours = Math.floor(diffTimeStamp / (1000 * 60 * 60)) % 24;
+                const days = Math.floor(diffTimeStamp / (1000 * 60 * 60 * 24));
+                setTimeLeft({
+                    days,
+                    hours,
+                    minutes,
+                    seconds
+                })
             }
-            const seconds = Math.floor(diffTimeStamp / 1000) % 60;
-            const minutes = Math.floor(diffTimeStamp / (1000 * 60)) % 60;
-            const hours = Math.floor(diffTimeStamp / (1000 * 60 * 60)) % 24;
-            const days = Math.floor(diffTimeStamp / (1000 * 60 * 60 * 24));
-            setTimeLeft({
-                days,
-                hours,
-                minutes,
-                seconds
-            })
         }
         /// Initial check
         calculateTimeLeft()
@@ -45,7 +46,7 @@ const useTimeLeft = (isoDate:string) => {
         return () => {
             clearInterval(interval)
         }
-    })
+    }, [])
     return timeLeft
 }
 export default useTimeLeft

@@ -16,6 +16,16 @@
 
     }
     .events {
-        @apply flex  gap-2;
+        @apply flex gap-5;
+        .event-card-wrapper {
+            @apply flex items-center;
+            .indexing {
+                @apply h-full flex justify-end items-center;
+                min-width: 6rem;
+                color: var(--primary-color);
+                font-size: 8rem;
+                font-family: 'Playfair Display', serif;
+            }
+        }
     }
 }

@@ -8,9 +8,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SolidIcon from '@/UI/SolidIcon/SolidIcon'
 interface EventsHorizontalProps {
     sectionName:string,
-    events:EventModel[]
+    events:EventModel[],
+    isIndexing?:boolean,
+    isAnimateInView?:boolean
 }
-const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
+const EventsHorizontal = ({events, sectionName, isIndexing = false, isAnimateInView = false}: EventsHorizontalProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     // const contentRef = useRef<HTMLDivElement>(null);
     const [maxDrag, setMaxDrag] = useState(0);
@@ -18,7 +20,8 @@ const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
     const isInView = useInView(containerRef)
     const [contentRef, animate] = useAnimate()
   
-
+    // console.log("offsetWidth", offsetWidth);
+    
     useEffect(() => {
         const checkWidths = () => {
             if (containerRef.current && contentRef.current) {
@@ -48,10 +51,7 @@ const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
         });
     };
     // Track drag movement and update offsetWidth
-    const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        console.log("offsetWidth", offsetWidth);
-        console.log("info.offset.x", info.offset.x);
-        
+    const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {        
         setOffsetWidth(prev => prev + info.offset.x);
     };
     return (
@@ -77,15 +77,28 @@ const EventsHorizontal = ({events, sectionName}: EventsHorizontalProps) => {
                 >
                 <motion.div 
                 ref={contentRef} 
+                // className={`${styles['events']} ${isIndexing ? 'gap' : 'gap-5'}` } 
                 className={styles['events']} 
                 drag="x" 
                 dragConstraints={{ left: maxDrag, right: 0 }}
-                onPan={(event, info) => handleDrag(event, info)} // Track drag movement
-                animate={isInView ? { x: [0, maxDrag, 0] } : { x: 0 }} // Animate only if visible
+                onDragEnd={handleDragEnd}
+                animate={(isInView && isAnimateInView) ? { x: [0, maxDrag, 0] } : { x: 0 }} // Animate only if visible
                 transition={{ ease: "easeInOut", duration: 10}}
                 >
                     {
-                        events.map(event => <EventCard key={event.id} event={event} />)
+                        events.map((event) =>  {
+                            return (<div className={styles['event-card-wrapper']}>
+                                {(isIndexing && event.order) && 
+                                    (<div className={styles['indexing']}>
+                                        <div>
+                                            {event.order}
+                                        </div>
+                                    </div>)
+                                }
+                                <EventCard key={event.id} event={event} />
+                            </div>) 
+                        }
+                    )
                     }
                 </motion.div>
 
