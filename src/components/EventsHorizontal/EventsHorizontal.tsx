@@ -8,11 +8,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SolidIcon from '@/UI/SolidIcon/SolidIcon'
 interface EventsHorizontalProps {
     sectionName:string,
+    sectionSlug:string
     events:EventModel[],
     isIndexing?:boolean,
     isAnimateInView?:boolean
 }
-const EventsHorizontal = ({events, sectionName, isIndexing = false, isAnimateInView = false}: EventsHorizontalProps) => {
+const EventsHorizontal = ({events, sectionSlug, sectionName, isIndexing = false, isAnimateInView = false}: EventsHorizontalProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     // const contentRef = useRef<HTMLDivElement>(null);
     const [maxDrag, setMaxDrag] = useState(0);
@@ -95,7 +96,7 @@ const EventsHorizontal = ({events, sectionName, isIndexing = false, isAnimateInV
                                         </div>
                                     </div>)
                                 }
-                                <EventCard key={event.id} event={event} />
+                                <EventCard key={event.id} event={event} sectionSlug={sectionSlug} />
                             </div>) 
                         }
                     )

@@ -1,6 +1,6 @@
 import { EventModel } from "./events.model";
 
-const upcomingEvents:EventModel[] = [
+const lowPriceEvents:EventModel[] = [
     {
         id:1,
         image: '/hero/hero-img1.webp',
@@ -88,7 +88,7 @@ const upcomingEvents:EventModel[] = [
         image: '/hero/hero-img2.jpg',
         title: 'Amusement Park',
         place: 'USA - Los Angles',
-        date: '2025-03-10T23:00:00.000Z',
+        date: '2025-03-06T23:00:00.000Z',
         description: `This is a long description that should be truncated after three lines.
         If the text exceeds the limit, it will be hidden with an ellipsis.
         This is another sentence to ensure the effect works correctly.
@@ -110,7 +110,7 @@ const upcomingEvents:EventModel[] = [
         image: '/hero/hero-img5.webp',
         title: 'Fireworks in Dubai',
         place: 'UAE - Dubai',
-        date: '2025-03-20T12:30:00.000Z',
+        date: '2025-03-15T12:30:00.000Z',
         description: `This is a long description that should be truncated after three lines.
         If the text exceeds the limit, it will be hidden with an ellipsis.
         This is another sentence to ensure the effect works correctly.
@@ -121,7 +121,7 @@ const upcomingEvents:EventModel[] = [
         image: '/hero/hero-img6.jpg',
         title: 'Run Race in Dubai',
         place: 'UAE - Dubai',
-        date: '2025-03-18T15:30:00.000Z',
+        date: '2025-03-15T15:30:00.000Z',
         description: `This is a long description that should be truncated after three lines.
         If the text exceeds the limit, it will be hidden with an ellipsis.
         This is another sentence to ensure the effect works correctly.
@@ -129,4 +129,4 @@ const upcomingEvents:EventModel[] = [
     },
 ]
 
-export default upcomingEvents
+export default lowPriceEvents

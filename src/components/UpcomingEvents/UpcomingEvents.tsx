@@ -6,6 +6,7 @@ const UpcomingEvents = () => {
       events={upcomingEvents}
       sectionName={"Upcoming Events"}
       isAnimateInView={true}
+      sectionSlug={'upcoming-events'}
     />
   );
 };

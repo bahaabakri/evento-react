@@ -13,10 +13,11 @@ const TopTrendingEvents = () => {
             <EventsHorizontal 
             events={topTrendingEventsOrdered}
             isIndexing={true}
-            sectionName={'Top Trending In Dubai'} />
+            sectionName={'Top Trending In Dubai'}
+            sectionSlug={'top-trending-events'} />
         </div>
 
     )
 }
 
-export default TopTrendingEvents
+export default TopTrendingEvents 
