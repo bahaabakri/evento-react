@@ -1,5 +1,5 @@
 .event-card {
-    width: 300px;
+    // width: 300px;
     @apply flex flex-col justify-between gap-2 rounded-xl pb-2;
     background-color: #fff;
     border: 1px solid var(--primary-color);
@@ -7,12 +7,10 @@
         color: var(--black);
         @apply flex flex-col gap-2 ;
         .event-card-img {
-            width: 300px;
+            // width: 300px;
             height: 200px;
             img {
-                @apply rounded-xl h-full;
-                object-fit: cover;
-                object-position: top center;
+                @apply rounded-xl w-full h-full object-cover;
             }
         }
 

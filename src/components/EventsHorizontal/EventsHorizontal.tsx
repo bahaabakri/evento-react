@@ -6,6 +6,7 @@ import { EventModel } from '@/data/events/events.model'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SolidIcon from '@/UI/SolidIcon/SolidIcon'
+import EventTitle from '../EventTitle/EventTitle'
 interface EventsHorizontalProps {
     sectionName:string,
     sectionSlug:string
@@ -57,11 +58,7 @@ const EventsHorizontal = ({events, sectionSlug, sectionName, isIndexing = false,
     };
     return (
         <div className={styles['events-wrapper']}>
-            <div className={styles['events-title-wrapper']}>
-                <div className={styles['events-title']}>
-                    <span className={styles['events-title-first-letter']}>{sectionName.slice(0,1)}</span> 
-                    <span>{sectionName.slice(1)}</span> 
-                </div>
+            <EventTitle sectionName={sectionName}>
                 <div className={styles['events-arrows']}>
                     
                     <SolidIcon handleClick={handleBackScroll} isDisabled={offsetWidth >= 0}>
@@ -71,7 +68,7 @@ const EventsHorizontal = ({events, sectionSlug, sectionName, isIndexing = false,
                         <ArrowForwardIcon sx={{color: '#fff'}} />
                     </SolidIcon>
                 </div>
-            </div>
+            </EventTitle>
             <motion.div 
                 className="overflow-hidden" 
                 ref={containerRef}
@@ -88,7 +85,7 @@ const EventsHorizontal = ({events, sectionSlug, sectionName, isIndexing = false,
                 >
                     {
                         events.map((event) =>  {
-                            return (<div className={styles['event-card-wrapper']}>
+                            return (<div key={event.id} className={styles['event-card-wrapper']}>
                                 {(isIndexing && event.order) && 
                                     (<div className={styles['indexing']}>
                                         <div>
@@ -96,7 +93,10 @@ const EventsHorizontal = ({events, sectionSlug, sectionName, isIndexing = false,
                                         </div>
                                     </div>)
                                 }
-                                <EventCard key={event.id} event={event} sectionSlug={sectionSlug} />
+                                <div className={styles['event-card']}>
+                                    <EventCard  event={event} sectionSlug={sectionSlug} />
+
+                                </div>
                             </div>) 
                         }
                     )

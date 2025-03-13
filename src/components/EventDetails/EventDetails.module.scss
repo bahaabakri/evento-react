@@ -1,0 +1,20 @@
+.event-details-wrapper {
+    @apply container px-2 flex flex-col gap-5;
+    .event-img {
+        // width: 300px;
+        height: 500px;
+        img {
+            @apply rounded-xl w-full h-full object-cover;
+        }
+    }
+    .event-date-place {
+        @apply text-sm md:text-lg;
+    }
+    .event-title {
+        @apply font-bold text-2xl md:text-5xl
+    }
+    .event-desc {
+        @apply text-xs md:text-sm;
+    }
+
+}
