@@ -1,8 +1,8 @@
-import moment from "moment";
+import day from "dayjs";
 
 const transformIsoDateToReadableDate = (isoDate:string) => {
-    const currentDate = moment().startOf('day');
-    const inputDate = moment(isoDate).startOf('day');
+    const currentDate = day().startOf('day');
+    const inputDate = day(isoDate).startOf('day');
     if (isoDate === "2025-03-20T12:30:00.000Z")
     console.log(currentDate.diff(inputDate, 'days'));
     
@@ -21,7 +21,7 @@ const transformIsoDateToReadableDate = (isoDate:string) => {
 }
 
 const transformIsoDateToReadableTime = (isoDate:string) => {
-    return moment(isoDate).format("h:mm A");
+    return day(isoDate).format("h:mm A");
 }
 const transformIsoDateToReadable = (isoDate:string) => {
     return `${transformIsoDateToReadableDate(isoDate)} ${transformIsoDateToReadableTime(isoDate)}`

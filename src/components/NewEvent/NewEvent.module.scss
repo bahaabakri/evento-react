@@ -1,0 +1,15 @@
+.new-event-wrapper {
+    @apply container mt-48 mx-auto;
+    .new-event {
+        .new-event-title {
+            @apply text-xl font-bold;
+        }
+        @apply flex flex-col gap-5;
+        .new-event-form {
+            @apply container flex flex-col gap-5;
+            .event-form-item {
+                @apply flex flex-col gap-2 font-bold;
+            }
+        }
+    }
+}

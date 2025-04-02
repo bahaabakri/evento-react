@@ -1,10 +1,18 @@
 import { TextField } from "@mui/material";
-
-function CustomTextField() {
+interface CustomTextFieldProps {
+  placeholder?: string,
+  height?:number,
+  maxWidth?:number,
+  textArea?:number
+}
+function CustomTextField({placeholder, maxWidth, textArea}:CustomTextFieldProps) {
   return (
     <TextField
       variant="standard" // Removes outline & underline
-      placeholder="Enter text"
+      placeholder={placeholder}
+      multiline={textArea ? true : false}
+      minRows={textArea ?? undefined}
+      maxRows={textArea ?? undefined}
       InputProps={{
         disableUnderline: true, // Ensures no underline
         sx: {
@@ -20,7 +28,7 @@ function CustomTextField() {
           },
         },
       }}
-      sx={{ width: "100%", maxWidth: 200 }} // Optional width setting
+      sx={{ width: "100%", maxWidth }} // Optional width setting
     />
   );
 }

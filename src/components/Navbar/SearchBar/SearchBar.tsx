@@ -54,7 +54,7 @@ const SearchBar = () => {
                 <motion.div className={styles['search-bar-bg']} variants={searchBarVariants} />
                 {
                     isOpen && <div  className={styles['search-bar-input-wrapper']}>
-                    <CustomTextField />
+                    <CustomTextField placeholder='Enter Text'/>
                 </div>
                 }
 

@@ -24,5 +24,10 @@ const navMenuItems:NavMenuItem[] = [
         title: 'About Us',
         path: '/about-us'
     },
+    {
+        id:5,
+        title: 'New Event',
+        path: '/new-event'
+    }
 ]
 export default navMenuItems
