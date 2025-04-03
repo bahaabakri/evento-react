@@ -5,7 +5,7 @@
     border: 1px solid var(--primary-color);
     .event-card-content-img {
         color: var(--black);
-        @apply flex flex-col gap-2 ;
+        @apply flex flex-col gap-2;
         .event-card-img {
             // width: 300px;
             height: 200px;
