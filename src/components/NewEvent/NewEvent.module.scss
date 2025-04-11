@@ -14,5 +14,8 @@
                 @apply flex flex-col gap-2 font-bold;
             }
         }
+        .submit-btn-wrapper {
+            @apply  my-5 mx-auto;
+        }
     }
 }

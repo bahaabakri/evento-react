@@ -1,13 +1,19 @@
-import { TextField } from "@mui/material";
-interface CustomTextFieldProps {
+import { TextField, TextFieldProps } from "@mui/material";
+interface CustomTextFieldProps extends Omit<TextFieldProps, 'variant'> {
   placeholder?: string,
   height?:number,
   maxWidth?:number,
-  textArea?:number
+  textArea?:number,
+  label?:string,
+  errorMessage?:string
 }
-function CustomTextField({placeholder, maxWidth, textArea}:CustomTextFieldProps) {
+function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, ...inputProps}:CustomTextFieldProps) {
   return (
     <TextField
+      {...inputProps}
+      error={!!errorMessage}
+      helperText={errorMessage}
+      label={label}
       variant="standard" // Removes outline & underline
       placeholder={placeholder}
       multiline={textArea ? true : false}

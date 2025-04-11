@@ -1,17 +1,23 @@
 import { motion } from "framer-motion"
 import styles from './Button.module.scss'
-import { ReactElement } from "react"
-interface ButtonProps {
-    children: ReactElement
+import { ButtonHTMLAttributes, ReactElement } from "react"
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    children: ReactElement;
+    isPending: boolean
 }
-const Button = ({children}: ButtonProps) => {
+const Button = ({children, isPending, ...buttonProps}: ButtonProps) => {
     return (
         <div className={styles['button-wrapper']}>
+        
         <motion.div
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.8 }}
+        {...(!buttonProps.disabled && {
+            whileHover:{scale: 1.2 },
+            whileTap:{scale: 0.8 }
+        })}
+
         >
-            <button>
+            <button {...buttonProps}>
+                {isPending && <div className="spinner"></div>}
                 {children}
             </button>
         </motion.div>
