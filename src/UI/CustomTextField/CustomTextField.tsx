@@ -5,11 +5,12 @@ interface CustomTextFieldProps extends Omit<TextFieldProps, 'variant'> {
   maxWidth?:number,
   textArea?:number,
   label?:string,
-  errorMessage?:string
+  errorMessage?:string,
 }
 function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, ...inputProps}:CustomTextFieldProps) {
   return (
-    <TextField
+    <>
+      <TextField
       {...inputProps}
       error={!!errorMessage}
       helperText={errorMessage}
@@ -38,6 +39,8 @@ function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, 
       }}
       sx={{ width: "100%", maxWidth }} // Optional width setting
     />
+    </>
+
   );
 }
 

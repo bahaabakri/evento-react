@@ -5,12 +5,13 @@ import styles from './NewEvent.module.scss'
 import CustomDateTimePicker from '@/UI/CustomDateTimePicker/CustomDateTimePicker'
 import ImagePicker from '@/UI/ImagePicker/ImagePicker'
 import * as yup from "yup";
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useActionState } from 'react';
 import addEventAction from './add-event-action';
 import Button from '@/UI/Button/Button';
 import Alert from '@mui/material/Alert';
+import dayjs from 'dayjs';
 const addEventFormValidationSchema = yup.object({
     name: yup.string().required('Event name is required')
         .min(3, 'Please Type at least 3 characters')
@@ -24,29 +25,31 @@ const addEventFormValidationSchema = yup.object({
         .min(5, 'Please Type at least 5 characters')
         .max(255,'Please Type less than 255 characters')
     ,
-    // date: yup
-    // .date()
-    // .typeError('Invalid date') // for cases where the value is not a valid Date
-    // .nullable() // allows null (from clearing the DatePicker)
-    // .required('Date is required'), // required field
+    date: yup
+    .string()
+    .required('Start date is required')
+    .test('is-valid-date', 'Invalid date format', (value) => {
+      return value ? dayjs(value).isValid() : false;
+    }),
     
 })
 const NewEvent = () => {
 
     const {
-        register,
-        formState: {errors, touchedFields, isValid}
+        control,
+        // watch,
+        formState: {isValid}
     } = useForm({
         defaultValues: {
             name: '',
             location: '',
             description: '',
-            // date: new Date()
+            date: dayjs().toISOString()
         },
         mode: "onBlur",
         resolver: yupResolver(addEventFormValidationSchema)
     })
-
+    // console.log(watch("date"))
     const [addEventFormState, addEventFormAction , isPending] = useActionState(
         addEventAction,
         {
@@ -54,6 +57,20 @@ const NewEvent = () => {
             successMessage:null
         } 
     )
+
+
+    // useEffect(() => {
+    //     const subscription = watch((value, { name, type }) => {
+    //         console.log(value, name, type)
+    //         if (name === 'date') {
+    //             return {
+    //                 ...value,
+    //                 date: value.date?.toIsoString()
+    //             }
+    //         }
+    //     })
+    //     return () => subscription.unsubscribe()
+    //   }, [watch])
     return (
         <div className={styles['new-event-wrapper']}>
             <div className={styles['new-event']}>
@@ -71,31 +88,49 @@ const NewEvent = () => {
                         <div className={styles['side-wrapper']}>
                             <div className={`${styles['event-name-wrapper']} ${styles['event-form-item']}`}>
                                 <label>Name:</label>
-                                <CustomTextField 
-                                    placeholder='Enter Event Name'
-                                    // label='Name'
-                                    errorMessage={(touchedFields.name && errors.name) ? errors.name.message: ''}
-                                    {...register('name')}
-                                    />
+                                <Controller 
+                                    control={control}
+                                    name='name'
+                                    render={({field, fieldState}) => (
+                                        <CustomTextField
+                                        {...field}
+                                        placeholder='Enter Event Name'
+                                        errorMessage={(fieldState.isTouched && fieldState.error) ? fieldState.error.message: ''}
+                                        />
+                                    )}
+                                />
                                 
                             </div>
                             <div className={`${styles['event-location-wrapper']} ${styles['event-form-item']}`}>
                                 <label>Location:</label>
-                                <CustomTextField 
-                                    placeholder='Enter Event Location'
-                                    // label='Location'
-                                    errorMessage={(touchedFields.location && errors.location) ? errors.location.message: ''}
-                                    {...register('location')}
+                                <Controller 
+                                    name='location'
+                                    control={control}
+                                    render={({field, fieldState}) => (
+                                        <CustomTextField
+                                        {...field}
+                                        placeholder='Enter Event Location'
+                                        errorMessage={(fieldState.isTouched && fieldState.error) ? fieldState.error.message: ''}
+                                        
+                                    />
+                                    )}
+                                
                                 />
+
                             </div>
                             <div className={`${styles['event-desc-wrapper']} ${styles['event-form-item']}`}>
                                 <label>Description:</label>
-                                <CustomTextField 
-                                    placeholder='More Description'
-                                    textArea={5}
-                                    // label='Description'
-                                    errorMessage={(touchedFields.description && errors.description) ? errors.description.message: ''}
-                                    {...register('description')}
+                                <Controller 
+                                    name='description'
+                                    control={control}
+                                    render={({field, fieldState}) => (
+                                        <CustomTextField
+                                        {...field}
+                                        placeholder='Enter Event Description'
+                                        textArea={2}
+                                        errorMessage={(fieldState.isTouched && fieldState.error) ? fieldState.error.message: ''}  
+                                    />
+                                    )}
                                 
                                 />
                             </div>
@@ -104,7 +139,16 @@ const NewEvent = () => {
 
                             <div className={`${styles['event-date-time-wrapper']} ${styles['event-form-item']}`}>
                                 <label>Event Date:</label>
-                                <CustomDateTimePicker />
+                                <Controller
+                                control={control}
+                                name="date"
+                                render={({ field, fieldState }) => (
+                                    <CustomDateTimePicker
+                                    {...field}
+                                    errorMessage={(fieldState.isTouched && fieldState.error) ? fieldState.error.message: ''} 
+                                    />
+                                )}
+                                />
                             </div>
                             <div className={`${styles['event-img-wrapper']} ${styles['event-form-item']}`}>
                                 <label>Images:</label>

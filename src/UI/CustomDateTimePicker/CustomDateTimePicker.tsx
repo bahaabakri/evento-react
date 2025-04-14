@@ -1,20 +1,27 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DateTimePicker, DateTimePickerProps } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { TextField } from "@mui/material";
-const CustomDateTimePicker = () => {
-    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
+interface CustomDateTimePickerProps extends Omit<DateTimePickerProps<Dayjs>, 'value'> {
+  errorMessage?:string;
+  value?:string | null;
+  // onChange?:(val:string | null) => void
+}
+const CustomDateTimePicker = ({errorMessage, value, ...inputProps}:CustomDateTimePickerProps) => {
+    // const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
     return (
+      <>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
-            
-                value={selectedDate}
-                onChange={(newValue) => setSelectedDate(newValue)}
+                {...inputProps}
+                value={value ? dayjs(value) : null}
                 slots={{ textField: TextField }} // Custom input component
                 slotProps={{
                   textField: {
+                    error: !!errorMessage,
+                    helperText: errorMessage,
                     variant: "standard",
                     InputProps: {
                       disableUnderline: true,
@@ -64,6 +71,7 @@ const CustomDateTimePicker = () => {
                 }}
             />
         </LocalizationProvider>
+      </>
     )
 }
 export default CustomDateTimePicker

@@ -1,11 +1,11 @@
 import { motion } from "framer-motion"
 import styles from './Button.module.scss'
-import { ButtonHTMLAttributes, ReactElement } from "react"
+import { ButtonHTMLAttributes, FC, ReactElement } from "react"
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactElement;
     isPending: boolean
 }
-const Button = ({children, isPending, ...buttonProps}: ButtonProps) => {
+const Button:FC<ButtonProps> = ({children, isPending, ...buttonProps}) => {
     return (
         <div className={styles['button-wrapper']}>
         
