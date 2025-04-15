@@ -1,17 +1,25 @@
-import { useRef, useState } from 'react'
+import {  useEffect, useRef, useState } from 'react'
 import styles from './ImagePicker.module.scss'
 import DeleteIcon from '@mui/icons-material/Delete';
-// interface ImagePickerProps {
-//     placeholder? : string
-// }
+interface ImagePickerProps {
+    errorMessage?:string;
+    onChange?: (files: File[]) => void;
+    name?: string;
+}
 interface SelectedImage {
     name:string,
-    url:string
+    url:string,
+    file:File
 }
-const ImagePicker = () => {
+const ImagePicker = ({onChange, errorMessage, ...inputProps}: ImagePickerProps) => {
     const fileRef = useRef<HTMLInputElement>(null)
     const [isDragging, setIsDragging] = useState<boolean>(false)
     const [selectedImages, setSelectedImages] = useState<SelectedImage[]>([])
+    
+    useEffect(() => {
+        onChange?.(selectedImages.map(el => el.file))
+    }, [selectedImages, onChange])
+    
     const onUploadFile = (event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         event.stopPropagation();
@@ -26,7 +34,7 @@ const ImagePicker = () => {
         }
 
         if (files && files.length > 0) {
-            console.log(files);
+            // console.log(files);
             for(let i=0; i< files.length; i++) {
                 if ((files[i].type.split('/')[0] !== 'image') || (selectedImages?.some(el => el.name === files[i].name))) continue;
                 // upload file
@@ -35,7 +43,8 @@ const ImagePicker = () => {
                         ...prev,
                         {
                             name: files[i].name,
-                            url: URL.createObjectURL(files[i])
+                            url: URL.createObjectURL(files[i]),
+                            file: files[i]
                         }
                     ]
                 })
@@ -75,7 +84,26 @@ const ImagePicker = () => {
                         : 'Drag & Drop images or Browse'
                     }
                 </div>
-                <input ref={fileRef} type="file" multiple className='hidden' accept=".png, .jpg, .jpeg" onChange={(e) => onUploadFile(e)} />
+                <input 
+                    ref={fileRef} 
+                    type="file" 
+                    multiple 
+                    className='hidden' 
+                    accept=".png, .jpg, .jpeg" 
+                    onChange={(e) => onUploadFile(e)} />
+                <input
+                    type="file"
+                    {...inputProps}
+                    multiple
+                    className='hidden'
+                    ref={(el) => {
+                        if (el && selectedImages.length > 0) {
+                        const dt = new DataTransfer();
+                        selectedImages.forEach(({ file }) => dt.items.add(file));
+                        el.files = dt.files;
+                        }
+                    }}
+                />
                 {
                 selectedImages.length > 0 && 
                 <div className={styles['images-preview']}>
@@ -92,7 +120,7 @@ const ImagePicker = () => {
                 </div>
             }
             </div>
-
+            {errorMessage && <p className='error-message'>{errorMessage}</p>}
         </div>
 
 
