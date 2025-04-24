@@ -5,7 +5,7 @@ import { EventModel } from '@/data/events/events.model'
 import EventTimeToLeft from '../EventTimeToLeft/EventTimeToLeft'
 import PlaceIcon from '@mui/icons-material/Place';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import { transformIsoDateToReadable } from '@/util/date';
+import { transformIsoDateToReadable } from '@/utils/date';
 import { Link } from 'react-router-dom';
 interface EventCardProps {
     event: EventModel,

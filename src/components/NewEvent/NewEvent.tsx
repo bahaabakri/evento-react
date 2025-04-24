@@ -3,15 +3,19 @@ import CustomTextField from '@/UI/CustomTextField/CustomTextField'
 
 import styles from './NewEvent.module.scss'
 import CustomDateTimePicker from '@/UI/CustomDateTimePicker/CustomDateTimePicker'
-import ImagePicker from '@/UI/ImagePicker/ImagePicker'
+import ImagePicker, { SelectedImage } from '@/UI/ImagePicker/ImagePicker'
 import * as yup from "yup";
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useActionState, useCallback, useState } from 'react';
+import { useActionState, useCallback, useEffect, useState } from 'react';
 import addEventAction from './add-event-action';
 import Button from '@/UI/Button/Button';
 import Alert from '@mui/material/Alert';
 import dayjs from 'dayjs';
+import { requestUploadIntent } from '@/services/upload';
+import { RequestIntentResponse } from '@/types/upload.type';
+
+// yup validation schema
 const addEventFormValidationSchema = yup.object({
     name: yup.string().required('Event name is required')
         .min(3, 'Please Type at least 3 characters')
@@ -30,13 +34,21 @@ const addEventFormValidationSchema = yup.object({
     .required('Start date is required')
     .test('is-valid-date', 'Invalid date format', (value) => {
       return value ? dayjs(value).isValid() : false;
-    }),
-    images: yup.array()
+    })
     
 })
-const NewEvent = () => {
 
+/**
+ * New Event component
+ * @description This component is used to add a new event.
+ * @returns 
+ */
+const NewEvent = () => {
+    /*** states */
     const [imageError, setImageError] = useState<string>()
+    const [uploadIntent, setUploadIntent] = useState<RequestIntentResponse>()
+    const [imagesIds, setImagesIds] = useState<string[]>()
+    /*** react hook form */
     const {
         control,
         // setValue,
@@ -46,12 +58,12 @@ const NewEvent = () => {
             name: '',
             location: '',
             description: '',
-            date: dayjs().toISOString(),
-            images: []
+            date: dayjs().toISOString()
         },
         mode: "onBlur",
         resolver: yupResolver(addEventFormValidationSchema)
     })
+    /*** action form hook */
     // console.log(watch("date"))
     const [addEventFormState, addEventFormAction , isPending] = useActionState(
         addEventAction,
@@ -60,11 +72,33 @@ const NewEvent = () => {
             successMessage:null
         } 
     )
-    const handleOnChangePicker = useCallback((files:File[]) => {
+    // useEffect hook to request intent api
+    useEffect(() => {
+        requestUploadImageIntent()
+    }, [])
+    ////////////////// helper methods /////////////////
+
+    /**
+     * * handleOnChangePicker
+     * @description This function is used to handle the change event of the image picker.
+     */
+    const handleOnChangePicker = useCallback((files:File[], selectedImages:SelectedImage[]) => {
         // once change in image picker please check error message
         checkImagesValidation(files)
+        if (!imageError) {
+            setImagesIds(selectedImages.map(el => el.id.toString()))
+        }
     }, [])
 
+
+    const requestUploadImageIntent = async () => {
+       const intent = await requestUploadIntent()
+       setUploadIntent(intent)
+    }
+    /**
+     * 
+     * @param files * @description This function is used to check the validation of the images.
+     */
     const checkImagesValidation = (files:File[]) => {
         setImageError(() => {
             if(files.length <= 0) return 'Please upload at least one image';
@@ -152,17 +186,14 @@ const NewEvent = () => {
                             </div>
                             <div className={`${styles['event-img-wrapper']} ${styles['event-form-item']}`}>
                                 <label>Images:</label>
-                                <Controller
-                                    control={control}
-                                    name="images"
-                                    render={({ field }) => (
-                                        <ImagePicker
-                                        {...field}
-                                        onChange={handleOnChangePicker}
-                                        errorMessage={imageError} 
-                                        />
-                                    )}
-                                />
+                                {
+                                    imagesIds && imagesIds.map(el => <input type="hidden" key={el} name="imagesIds" value={el} />)
+                                }
+                                <ImagePicker
+                                    uploadIntent={uploadIntent}
+                                    onChange={handleOnChangePicker}
+                                    errorMessage={imageError} 
+                                    />
                             </div>
                         </div>
                     </div>
