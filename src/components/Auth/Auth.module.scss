@@ -1,0 +1,37 @@
+.auth-dialog-wrapper {
+    @apply  overflow-hidden relative h-screen w-screen;
+
+}
+
+.auth-dialog {
+
+    form {
+        @apply p-5 flex flex-col gap-5;
+        background-color: var(--black);
+        .auth-dialog-header {
+            @apply flex flex-col gap-5;
+            .auth-dialog-title {
+                color: var(--white-gray);
+                @apply text-xl md:text-3xl font-bold;
+            }
+        }
+        .auth-dialog-content {
+            @apply flex flex-col gap-5;
+            .auth-dialog-content-text {
+                @apply text-white;
+            }
+        }
+        .auth-dialog-action {
+            @apply flex justify-end gap-5;
+            button {
+                margin: 0;
+            }
+        }
+    }
+    .auth-dialog-signin-with {
+        @apply flex gap-2 text-white;
+        br {
+            @apply text-white w-full;
+        }
+    }
+}

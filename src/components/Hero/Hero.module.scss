@@ -1,17 +1,5 @@
 .hero-section {
     @apply  overflow-hidden relative h-screen w-screen;
-    .hero-section-overlay {
-        background-color: #000;
-        @apply w-full h-full;
-        .image-slider {
-            @apply w-full h-full;
-            opacity: 0.2;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            // animation: slideInOut 10s linear 2s infinite;
-        }
-    }
     .hero-section-content {
         // margin-top: 100px;
         @apply absolute top-0 left-0 w-full h-full flex justify-center items-center text-white;

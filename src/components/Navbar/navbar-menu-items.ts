@@ -1,7 +1,8 @@
 export interface NavMenuItem {
     id:number,
     title:string,
-    path:string
+    path:string,
+    isButton?:boolean
 }
 const navMenuItems:NavMenuItem[] = [
     {
@@ -28,6 +29,12 @@ const navMenuItems:NavMenuItem[] = [
         id:5,
         title: 'New Event',
         path: '/new-event'
+    },
+    {
+        id:6,
+        title: 'Join',
+        path: '/auth',
+        isButton: true
     }
 ]
 export default navMenuItems

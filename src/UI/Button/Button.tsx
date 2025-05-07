@@ -3,11 +3,12 @@ import styles from './Button.module.scss'
 import { ButtonHTMLAttributes, FC, ReactElement } from "react"
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactElement;
-    isPending: boolean
+    isPending?: boolean;
+    isSecondButton?: boolean
 }
-const Button:FC<ButtonProps> = ({children, isPending, ...buttonProps}) => {
+const Button:FC<ButtonProps> = ({children, isPending = false, isSecondButton = false, ...buttonProps}) => {
     return (
-        <div className={styles['button-wrapper']}>
+        <div className={`${styles['button-wrapper']} ${isSecondButton ? styles['second-button']: styles['primary-button']}`}>
         
         <motion.div
         {...(!buttonProps.disabled && {
