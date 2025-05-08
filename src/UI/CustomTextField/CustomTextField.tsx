@@ -6,8 +6,9 @@ interface CustomTextFieldProps extends Omit<TextFieldProps, 'variant'> {
   textArea?:number,
   label?:string,
   errorMessage?:string,
+  textColor?:string
 }
-function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, ...inputProps}:CustomTextFieldProps) {
+function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, textColor = "#000", ...inputProps}:CustomTextFieldProps) {
   return (
     <>
       <TextField
@@ -23,11 +24,23 @@ function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, 
       slotProps={{
         input:{
           disableUnderline: true, // Ensures no underline
+          // classes: {
+          //   input: placeholderClassName, // ✅ attach Tailwind class to input
+          // },
+          // className: placeholderClassName,
           sx: {
             border: "1px solid #ccc", // Light gray border
             borderRadius: "12px", // Rounded edges
             paddingX: 2, // Horizontal padding
             paddingY: 1, // Vertical padding
+            "& input::placeholder": {
+              color: textColor, // ✅ Target input placeholder
+              opacity: 1,
+            },
+            "& input": {
+              color: textColor, // ✅ Target input placeholder
+              opacity: 1,
+            },
             "&:hover": {
               borderColor: "#888", // Darker border on hover
             },

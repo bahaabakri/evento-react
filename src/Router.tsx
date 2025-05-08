@@ -5,6 +5,7 @@ import Home from "./pages/Home"
 import EventDetailsPage from "./pages/Events/EventDetails"
 import NewEventPage from "./pages/NewEvent/NewEvent"
 import AuthPage from "./pages/Auth/Auth"
+import AuthOtpPage from "./pages/AuthOtp/AuthOtp"
 
 const MainRouterProvider = () => {
     return (
@@ -18,6 +19,9 @@ const MainRouterProvider = () => {
             </Route>
             <Route path="new-event" element={<NewEventPage />} />
             <Route path="auth" element={<AuthPage />} />
+
+            <Route path="auth" element={<AuthPage />} />
+            <Route path="auth/otp" element={<AuthOtpPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
