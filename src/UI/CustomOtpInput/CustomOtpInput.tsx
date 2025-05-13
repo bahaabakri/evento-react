@@ -6,6 +6,7 @@ interface CustomOtpInputProps {
   onChange: (otp: string) => void;
   maxWidth?: number;
   textColor?: string;
+  errorMessage?:string,
 }
 
 export default function CustomOtpInput({
@@ -13,6 +14,7 @@ export default function CustomOtpInput({
   onChange,
   maxWidth,
   textColor,
+  // errorMessage
 }: CustomOtpInputProps) {
   const [otpValues, setOtpValues] = useState<string[]>(Array(length).fill(''));
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -43,6 +45,7 @@ export default function CustomOtpInput({
         <CustomTextField
           key={index}
           value={val}
+          // errorMessage={errorMessage}
           onChange={(e) => handleChange(index, e.target.value)}
           onKeyDown={(e) => handleKeyDown(index, e)}
           inputRef={(el) => (inputsRef.current[index] = el)}

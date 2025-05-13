@@ -23,6 +23,7 @@ export default async function addEventAction(prevState:AddEventActionState, form
         }
     } 
     catch(err) {
+        console.log(err)
         return {
             errorMessage: 'Something went wrong',
             successMessage: null

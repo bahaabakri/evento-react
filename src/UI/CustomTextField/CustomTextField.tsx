@@ -1,4 +1,5 @@
 import { TextField, TextFieldProps } from "@mui/material";
+import { FC, forwardRef } from "react";
 interface CustomTextFieldProps extends Omit<TextFieldProps, 'variant'> {
   placeholder?: string,
   height?:number,
@@ -8,10 +9,11 @@ interface CustomTextFieldProps extends Omit<TextFieldProps, 'variant'> {
   errorMessage?:string,
   textColor?:string
 }
-function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, textColor = "#000", ...inputProps}:CustomTextFieldProps) {
+const  CustomTextField:FC<CustomTextFieldProps> = forwardRef(({placeholder, maxWidth, textArea, label, errorMessage, textColor = "#000", ...inputProps}:CustomTextFieldProps, ref) => {
   return (
     <>
       <TextField
+      ref={ref}
       {...inputProps}
       error={!!errorMessage}
       helperText={errorMessage}
@@ -37,6 +39,10 @@ function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, 
               color: textColor, // ✅ Target input placeholder
               opacity: 1,
             },
+            "& input::disabled": {
+              background: 'var(--primary-color)', // ✅ Target input placeholder
+              color: 'var(--black)',
+            },
             "& input": {
               color: textColor, // ✅ Target input placeholder
               opacity: 1,
@@ -55,6 +61,6 @@ function CustomTextField({placeholder, maxWidth, textArea, label, errorMessage, 
     </>
 
   );
-}
+})
 
 export default CustomTextField;
