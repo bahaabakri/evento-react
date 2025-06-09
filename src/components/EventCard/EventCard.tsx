@@ -1,7 +1,7 @@
 
 import Button from '@/UI/Button/Button'
 import styles from './EventCard.module.scss'
-import { EventModel } from '@/data/events/events.model'
+import { EventModel } from '@/types/events.type'
 import EventTimeToLeft from '../EventTimeToLeft/EventTimeToLeft'
 import PlaceIcon from '@mui/icons-material/Place';
 import DateRangeIcon from '@mui/icons-material/DateRange';

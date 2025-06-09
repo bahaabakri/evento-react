@@ -1,4 +1,4 @@
-import { EventModel } from '@/data/events/events.model'
+import { EventModel } from '@/types/events.type'
 import styles from './EventsGrid.module.scss'
 import EventCard from '../EventCard/EventCard'
 import EventTitle from '../EventTitle/EventTitle'

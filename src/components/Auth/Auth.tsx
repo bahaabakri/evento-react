@@ -57,7 +57,7 @@ const Auth: FC = () => {
         setIsSubmitButtonLoading(true)
         setErrorMessage(undefined)
         try {
-            await api.post('users/loginRegister', {email: data.email})
+            await api.post('auth/loginRegister', {email: data.email})
             setIsSubmitButtonLoading(false)
             navigate(`/auth/otp?email=${data.email}`)
         } 

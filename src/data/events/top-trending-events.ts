@@ -1,4 +1,4 @@
-import { EventModel } from "./events.model";
+import { EventModel } from "../../types/events.type";
 
 const topTrendingEvents:EventModel[] = [
     {

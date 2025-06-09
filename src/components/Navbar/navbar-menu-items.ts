@@ -2,7 +2,9 @@ export interface NavMenuItem {
     id:number,
     title:string,
     path:string,
-    isButton?:boolean
+    isButton?:boolean,
+    isAuth?:boolean,
+    isNotAuth?:boolean
 }
 const navMenuItems:NavMenuItem[] = [
     {
@@ -34,7 +36,17 @@ const navMenuItems:NavMenuItem[] = [
         id:6,
         title: 'Join',
         path: '/auth',
-        isButton: true
+        isButton: true,
+        isAuth: false,
+        isNotAuth: true
+    },
+        {
+        id:6,
+        title: 'Logout',
+        path: '/logout',
+        isButton: true,
+        isAuth: true,
+        isNotAuth: false
     }
 ]
 export default navMenuItems

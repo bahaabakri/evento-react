@@ -53,7 +53,7 @@ const AuthOtp: FC = () => {
     setIsSubmitButtonLoading(true);
     setErrorMessage(undefined);
     try {
-      await api.post("users/verify", data);
+      await api.post("auth/verify", data);
       setIsSubmitButtonLoading(false);
       navigate("/");
     } catch (err) {

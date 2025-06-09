@@ -2,7 +2,7 @@ import { motion, PanInfo, useAnimate, useInView } from 'motion/react'
 import EventCard from '../EventCard/EventCard'
 import styles from './EventsHorizontal.module.scss'
 import { useEffect, useRef, useState } from 'react'
-import { EventModel } from '@/data/events/events.model'
+import { EventModel } from '@/types/events.type'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SolidIcon from '@/UI/SolidIcon/SolidIcon'

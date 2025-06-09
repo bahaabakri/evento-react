@@ -1,8 +1,7 @@
 // utils/api.ts or lib/api.ts
 import axios from 'axios';
-
 const axiosInstance  = axios.create({
-  baseURL: 'http://localhost:3000', // replace with your base URL
+  baseURL: import.meta.env.VITE_API_BASE_URL, // replace with your base URL or set in .env as VITE_API_BASE_URL
   headers: {
     'Content-Type': 'application/json',
   },

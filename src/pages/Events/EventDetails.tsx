@@ -1,6 +1,6 @@
 import EventDetails from "@/components/EventDetails/EventDetails";
 import allEvents from "@/data/events/all-events";
-import { EventModel } from "@/data/events/events.model";
+import { EventModel } from "@/types/events.type";
 import { useParams } from "react-router-dom";
 
 const EventDetailsPage = () => {
