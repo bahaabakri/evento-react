@@ -40,8 +40,8 @@ const navMenuItems:NavMenuItem[] = [
         isAuth: false,
         isNotAuth: true
     },
-        {
-        id:6,
+    {
+        id:7,
         title: 'Logout',
         path: '/logout',
         isButton: true,
