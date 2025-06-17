@@ -1,28 +1,17 @@
-import { User } from "@/types/user.type"
-import api from "@/utils/api"
-import { useEffect, useState } from "react"
-
+// src/hooks/useAuth.ts
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkIsAuthenticated } from '@/store/authSlice';
+import { AppDispatch, RootState } from '@/store/store';
 const useAuth = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>()
-    const [user, setUser] = useState<User | null>(null)
-    useEffect(() => {
-        checkIsAuthenticated()
-    }, [])
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-    const checkIsAuthenticated = async() => {
-        try {
-            const {user} = await api.get<{user:User}>('users/me',{ withCredentials: true })
-            if (user) {
-                setIsAuthenticated(true)
-                setUser(user)
-            } else {
-                setIsAuthenticated(false)
-                setUser(null)
-            }
-        } catch(err) {
-            console.log(err)
-        }
-    }
-    return {isAuthenticated, user}
-}
-export default useAuth
+  useEffect(() => {
+    dispatch(checkIsAuthenticated());
+  }, [dispatch]);
+
+  return { user, isAuthenticated };
+};
+
+export default useAuth;

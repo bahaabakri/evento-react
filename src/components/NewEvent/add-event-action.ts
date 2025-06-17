@@ -1,6 +1,8 @@
-import api from "@/utils/api";
+
+import { request } from "@/services/api";
 import dayjs from "dayjs";
 import { EventType } from "react-hook-form";
+
 
 export type AddEventActionState = {
     errorMessage:null | string;
@@ -16,7 +18,7 @@ export default async function addEventAction(prevState:AddEventActionState, form
         imagesIds
     }
     try {
-        await api.post<EventType>('events', data)
+        await request<EventType>('post', 'admin/events', data)
         return {
             errorMessage: null,
             successMessage: 'Created Event Successfully'

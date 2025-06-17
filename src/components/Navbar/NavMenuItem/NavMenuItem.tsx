@@ -10,17 +10,19 @@ const NavMenuItem = ({path, title, isButton}: NavMenuItem) => {
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
     >
-        <NavLink to={path} className={({isActive}) => isActive ? styles['active'] : undefined}>
-            {
-                !isButton
-                ? title
-                : <Button>
-                    <div>{title}</div>
-                </Button>
-            }
-            
+        {
+            <NavLink to={path} className={({isActive}) => isActive ? styles['active'] : undefined}>
+                {
+                    !isButton
+                    ? title
+                    : <Button>
+                        <div>{title}</div>
+                    </Button>
+                }
+            </NavLink>
 
-        </NavLink>
+        }
+
     </motion.li>)
 }
 

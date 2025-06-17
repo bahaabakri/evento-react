@@ -1,9 +1,10 @@
+import { useHttp } from "@/hooks/useHttp";
+import { VerifyOtpRequest, VerifyOtpResponse } from "@/types/auth.type";
 import AuthDialog from "@/UI/AuthDialog/AuthDialog";
 import CustomOtpInput from "@/UI/CustomOtpInput/CustomOtpInput";
-import api from "@/utils/api";
+import { setAuthToken } from "@/services/auth-cookie";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AxiosError } from "axios";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import {useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -18,11 +19,7 @@ const otpFormValidationSchema = yup.object({
   otp: yup.string().required("OTP is required"),
 });
 const AuthOtp: FC = () => {
-  const [isSubmitButtonLoading, setIsSubmitButtonLoading] =
-    useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const {request, error:errorMessage, loading:isSubmitButtonLoading} = useHttp()
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
@@ -49,25 +46,19 @@ const AuthOtp: FC = () => {
    * to handle submit
    * @param event
    */
-  const onSubmit = async (data: { otp: string; email: string }) => {
-    setIsSubmitButtonLoading(true);
-    setErrorMessage(undefined);
-    try {
-      await api.post("auth/verify", data);
-      setIsSubmitButtonLoading(false);
-      navigate("/");
-    } catch (err) {
-        const error = err as AxiosError<{message:string}>;
-        setErrorMessage(error?.response?.data?.message || 'Something went wrong!')
-        setIsSubmitButtonLoading(false)
-    }
+  const onSubmit = async (data: VerifyOtpRequest) => {
+      const res = await request<VerifyOtpResponse>("post", "auth/verify", data);
+      if (res) {
+        setAuthToken(res.access_token)
+        navigate("/");
+      }
   };
   return (
     <AuthDialog
       title={title}
       subtitle={subtitle}
       onSubmitDialog={handleSubmit(onSubmit)}
-      errorMessage={errorMessage}
+      errorMessage={errorMessage ?? undefined}
       isSubmitButtonDisabled={(isDirty && !isValid) || isSubmitButtonLoading}
       isSubmitButtonLoading={isSubmitButtonLoading}
     >

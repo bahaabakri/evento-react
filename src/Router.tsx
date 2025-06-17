@@ -6,6 +6,7 @@ import EventDetailsPage from "./pages/Events/EventDetails"
 import NewEventPage from "./pages/NewEvent/NewEvent"
 import AuthPage from "./pages/Auth/Auth"
 import AuthOtpPage from "./pages/AuthOtp/AuthOtp"
+import LogoutPage from "./pages/Logout/Logut"
 
 const MainRouterProvider = () => {
     return (
@@ -22,6 +23,7 @@ const MainRouterProvider = () => {
 
             <Route path="auth" element={<AuthPage />} />
             <Route path="auth/otp" element={<AuthOtpPage />} />
+            <Route path="logout" element={<LogoutPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

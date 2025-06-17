@@ -1,8 +1,8 @@
-import api from "@/utils/api";
-import { DeleteImageResponse, RequestIntentResponse, UploadImagesResponse } from "../types/upload.type";
+// import {request} from "@/services/api";
+// import { DeleteImageResponse, RequestIntentResponse, UploadImagesResponse } from "../types/upload.type";
 
 export function requestUploadIntent() {
-    return api.post<RequestIntentResponse>('upload-image/intent', {})
+    // return api.post<RequestIntentResponse>('upload-image/intent', {})
 }
 
 export function uploadImages(key:string, images:FileList) {
@@ -11,13 +11,15 @@ export function uploadImages(key:string, images:FileList) {
     for(let i=0; i< images.length; i++) {
         formData.append('images', images[i]);
     }
-    return api.post<UploadImagesResponse>('upload-image/images', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-    })
+    // return request.post<UploadImagesResponse>('upload-image/images', formData, {
+    //     headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //       },
+    // })
 }
 
 export function deleteImage(id:number) {
-    return api.delete<DeleteImageResponse>(`upload-image/image/${id}`)
+    console.log(id);
+    
+    // return api.delete<DeleteImageResponse>(`upload-image/image/${id}`)
 }

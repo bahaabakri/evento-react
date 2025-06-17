@@ -5,8 +5,10 @@ import NavMenuItem from './NavMenuItem/NavMenuItem'
 import MobileNav from './MobileNavbar/MobileNavbar'
 import SearchBar from './SearchBar/SearchBar'
 import useAuth from '@/hooks/useAuth'
+// Import or define AuthState type
 const Navbar = () => {
-    const {isAuthenticated} = useAuth()
+    // call use Auth hook to recheck the authentication state
+    const { isAuthenticated} = useAuth();
     return (
         <div className={styles['main-navbar']}>
             <div className={styles['navbar-container']}>
@@ -16,17 +18,15 @@ const Navbar = () => {
                     <ul className={styles['menu']}>
                         <li><SearchBar /></li>
                         {
-                            navMenuItems
-                                .filter(item =>
-                                    // Always show items without any auth-related flag
-                                    item.isAuth === undefined && item.isNotAuth === undefined ||
-                                    // Show if isAuth matches
-                                    item.isAuth === isAuthenticated ||
-                                    // Show if isNotAuth matches
-                                    item.isNotAuth === !isAuthenticated
-                                )
-                            .map(navMenuItem => 
-                                <NavMenuItem key={navMenuItem.id} {...navMenuItem}/>
+                        typeof isAuthenticated === 'boolean' &&
+                        navMenuItems
+                            .filter(item =>
+                            (item.isAuth === undefined && item.isNotAuth === undefined) ||
+                            (item.isAuth === isAuthenticated) ||
+                            (item.isNotAuth === !isAuthenticated)
+                            )
+                            .map(navMenuItem =>
+                            <NavMenuItem key={navMenuItem.id} {...navMenuItem} />
                             )
                         }
                     </ul>

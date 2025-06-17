@@ -1,6 +1,6 @@
 import { EventModel } from '@/types/events.type';
 import styles from './EventDetails.module.scss'
-import { transformIsoDateToReadable } from '@/utils/date';
+import { transformIsoDateToReadable } from '@/services/date';
 interface EventDetailsProps {
     event: EventModel
 }

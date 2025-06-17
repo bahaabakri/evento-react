@@ -4,20 +4,19 @@ import facebookIcon from "@/assets/auth/facebook.svg";
 import googleIcon from "@/assets/auth/google.svg";
 import appleIcon from "@/assets/auth/apple.svg";
 import AuthDialog from "@/UI/AuthDialog/AuthDialog";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import api from "@/utils/api";
 import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
+import { LoginRegisterBodyRequest, LoginRegisterResponse } from "@/types/auth.type";
+import { useHttp } from "@/hooks/useHttp";
 // yup validation schema
 const loginRegisterFormValidationSchema = yup.object({
     email: yup.string().required('Email is required').email('Enter valid email address')
 })
 const Auth: FC = () => {
-    const [isSubmitButtonLoading, setIsSubmitButtonLoading] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
+    const {request, error:errorMessage, loading:isSubmitButtonLoading} = useHttp()
     const navigate = useNavigate()
     /*** react hook form */
     const {
@@ -53,27 +52,18 @@ const Auth: FC = () => {
    * to handle submit
    * @param event
    */
-  const onSubmit = async (data:{email:string}) => {
-        setIsSubmitButtonLoading(true)
-        setErrorMessage(undefined)
-        try {
-            await api.post('auth/loginRegister', {email: data.email})
-            setIsSubmitButtonLoading(false)
-            navigate(`/auth/otp?email=${data.email}`)
-        } 
-        catch(err) {
-            const error = err as AxiosError<{message:string}>;
-            setErrorMessage(error?.response?.data?.message || 'Something went wrong!')
-            setIsSubmitButtonLoading(false)
+  const onSubmit = async ({email}:LoginRegisterBodyRequest) => {      
+        const res = await request<LoginRegisterResponse>('post', 'auth/loginRegister', {email})
+        if (res) {
+          navigate(`/auth/otp?email=${email}`)
         }
-    
   };
   return (
     <AuthDialog
       title={title}
       subtitle={subtitle}
       footerContent={footerContent}
-      errorMessage={errorMessage}
+      errorMessage={errorMessage ?? undefined}
       isSubmitButtonDisabled={(isDirty && !isValid) || isSubmitButtonLoading}
       isSubmitButtonLoading={isSubmitButtonLoading}
       onSubmitDialog={handleSubmit(onSubmit)}

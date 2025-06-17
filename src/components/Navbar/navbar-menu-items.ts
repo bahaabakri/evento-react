@@ -1,10 +1,11 @@
 export interface NavMenuItem {
-    id:number,
-    title:string,
-    path:string,
-    isButton?:boolean,
-    isAuth?:boolean,
-    isNotAuth?:boolean
+    id:number;
+    title:string;
+    path:string;
+    isNoRoute?:boolean;
+    isButton?:boolean;
+    isAuth?:boolean;
+    isNotAuth?:boolean;
 }
 const navMenuItems:NavMenuItem[] = [
     {
