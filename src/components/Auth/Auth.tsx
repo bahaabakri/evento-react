@@ -1,7 +1,8 @@
 import CustomTextField from "@/UI/CustomTextField/CustomTextField";
 import styles from "./Auth.module.scss";
 import facebookIcon from "@/assets/auth/facebook.svg";
-import googleIcon from "@/assets/auth/google.svg";
+import googleIcon from "@/assets/auth/google.svg"
+import type {TokenResponse } from "@react-oauth/google";
 import appleIcon from "@/assets/auth/apple.svg";
 import AuthDialog from "@/UI/AuthDialog/AuthDialog";
 import { FC } from "react";
@@ -9,8 +10,10 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { LoginRegisterBodyRequest, LoginRegisterResponse } from "@/types/auth.type";
+import { LoginRegisterBodyRequest, LoginRegisterResponse, VerifyOtpResponse } from "@/types/auth.type";
 import { useHttp } from "@/hooks/useHttp";
+import { useGoogleLogin } from "@react-oauth/google";
+import { setAuthToken } from "@/services/auth-cookie";
 // yup validation schema
 const loginRegisterFormValidationSchema = yup.object({
     email: yup.string().required('Email is required').email('Enter valid email address')
@@ -18,6 +21,26 @@ const loginRegisterFormValidationSchema = yup.object({
 const Auth: FC = () => {
     const {request, error:errorMessage, loading:isSubmitButtonLoading} = useHttp()
     const navigate = useNavigate()
+        const handleGoogleOAuthSuccess = async (tokenResponse: TokenResponse) => {
+        const token = tokenResponse.access_token;
+        console.log('GOOGLE LOGIN SUCCESS', token)
+        // send google auth token to BE
+        const res = await request<VerifyOtpResponse>('post', 'auth/google-login', {token})
+        if(res) {
+          console.log('GOOGLE LOGIN SUCCESS WITH BE', res)
+          setAuthToken(res.access_token)
+          navigate("/");
+        }
+    }
+    const handleGoogleOAuthError = () => {
+      console.log('Login Failed')
+    }
+    const loginWithGoogle = useGoogleLogin({
+      onSuccess: async (tokenResponse:TokenResponse) => {
+        handleGoogleOAuthSuccess(tokenResponse)
+      },
+      onError: handleGoogleOAuthError
+    })
     /*** react hook form */
     const {
         control,
@@ -31,6 +54,7 @@ const Auth: FC = () => {
         mode: "onBlur",
         resolver: yupResolver(loginRegisterFormValidationSchema)
     })
+
   const title = " Welcome on board.\n One place for all events in the world";
   const subtitle =
     "To subscribe to this website, please enter your email address here. We will send updates occasionally.";
@@ -43,7 +67,8 @@ const Auth: FC = () => {
       </div>
       <div className={styles["signin-with-websites"]}>
         <img src={facebookIcon} alt="" />
-        <img src={googleIcon} alt="" />
+        <img src={googleIcon} alt="" onClick={() => loginWithGoogle()} />
+        {/* <GoogleLogin ref={googleLoginButtonRef} onSuccess={handleGoogleOAuthSuccess} onError={handleGoogleOAuthError}></GoogleLogin> */}
         <img src={appleIcon} alt="" />
       </div>
     </>
