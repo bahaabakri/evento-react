@@ -2,6 +2,7 @@ import { EventModel } from '@/types/events.type'
 import styles from './EventsGrid.module.scss'
 import EventCard from '../EventCard/EventCard'
 import EventTitle from '../EventTitle/EventTitle'
+import { Box, Pagination } from '@mui/material'
 interface EventsGridProps {
     sectionName:string,
     sectionSlug:string
@@ -9,6 +10,7 @@ interface EventsGridProps {
 }
 const EventsGrid = ({events, sectionSlug, sectionName}: EventsGridProps) => {
     return (
+        <>
         <div className={styles['events-wrapper']}>
         <EventTitle sectionName={sectionName} children={undefined} />
         <ul className={styles['events']}>
@@ -22,6 +24,10 @@ const EventsGrid = ({events, sectionSlug, sectionName}: EventsGridProps) => {
             }
         </ul>
         </div>
+        <Box display="flex" justifyContent="center" mt={2}>
+            <Pagination count={10} variant="outlined" color="primary" />
+        </Box>
+        </>
     )
 }
 export default EventsGrid
