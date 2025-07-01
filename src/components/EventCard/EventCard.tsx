@@ -13,7 +13,7 @@ interface EventCardProps {
 }
 const EventCard = ({event, sectionSlug}: EventCardProps) => {
     return (
-        <Link to={`events/${event.id.toString()}`}>
+        <Link to={`/events/${event.id.toString()}`}>
             <div className={styles['event-card']}>
                 <div className={styles['event-card-content-img']}>
                     <div className={styles['event-card-img']}>
